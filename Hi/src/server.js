@@ -8,7 +8,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // '/' 경로에 index.html 파일을 띄우기 위한 라우트 설정
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 });
 
 // 서버 실행
