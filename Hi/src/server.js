@@ -13,6 +13,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
   db.query('SELECT * FROM posts', (err,results) => {
     if (err) throw err;
+    res.send(results);
+    //모든 테이블의 데이터를 조회하고 결과를 보내기 위해 작성
   res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
   });
 });
