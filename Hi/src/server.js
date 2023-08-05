@@ -6,13 +6,13 @@ const db = require('../db');
 
 // EJS 템플릿 엔진 설정
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname,'..', 'public'));
 
 // 전송받은 폼을 읽기위해 POST 요청 본문을 파싱하는 미들웨어
 app.use(express.urlencoded({ extended: false }));
 
 // 정적 파일을 제공하는 미들웨어 설정
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname,'..', 'public')));
 
 // '/' 경로에 index.ejs 파일을 띄우기 위한 라우트 설정
 app.get('/', (req, res) => {
