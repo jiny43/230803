@@ -4,7 +4,30 @@ DBMS: MySQL
 
 ---
 
-8/5
+### 8/5<br>
+---
+
+HTML 파일 작성 (index.html):<br>
+간단한 게시판 레이아웃을 작성.<br>
+게시물을 보여주는 container와 새로운 게시물을 추가하는 form-container로 구성됨.
+
+---
+Express 서버 설정 (server.js):<br>
+'/' 경로에 접속 시 index.html을 렌더<br>
+게시물 조회와 게시물 추가를 위한 라우트 작성
+
+---
+
+MySQL 데이터베이스 설정 (db.js):<br>
+MySQL 데이터베이스와의 연결.<br>
+posts 테이블에 새로운 게시물을 추가하는 INSERT 쿼리를 작성.<br>
+posts 테이블의 모든 데이터를 조회하는 SELECT 쿼리를 작성.
+
+---
+
+게시물 추가 기능 (server.js): <br>
+/submit 경로에 POST 요청을 처리. <br>
+폼에서 입력한 게시물의 제목과 내용을 데이터베이스의 posts 테이블에 추가.
 
 database: bulletin_board
 
