@@ -42,3 +42,19 @@ Table: posts
 | id | title | content       | created_at         |
 |----|-------|---------------|--------------------|
 | 1  | 첫게시물  | (/*˘ ³˘)/♥ | 2023-08-05 17:30:59 |
+
+---
+
+EJS(Embedded JavaScript Template):<br>
+ejs템플릿 파일 작성: <br>
+index.html -> index.ejs<br>
+서버에서 보낸 변수를 html 태그처럼 자바스크립트 내용을 삽입할 수 있다.
+<% 에서 변수를 선언하고 <%= 로 받아서 사용할 수 있다.<br>
+
+```
+ <% posts.forEach((post) => { %><br>
+<%= post.title %><br>
+<%= post.content %><br>
+
+```
+
