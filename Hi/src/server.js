@@ -35,6 +35,24 @@ app.post('/submit', (req, res) => {
   });
 });
 
+// 회원 가입 페이지를 보여주기 위한 라우트
+app.get('/signup', (req, res) => {
+  res.render('signup'); // signup.ejs 파일을 렌더링하여 회원 가입 페이지 보여줌
+});
+
+// 회원 가입 정보를 처리하는 핸들러
+app.post('/signup', (req, res) => {
+  const { username, password, email } = req.body;
+  // 회원 가입 정보를 데이터베이스에 삽입
+  db.query('INSERT INTO users (username, password, email) VALUES (?, ?, ?)', [username, password, email], (err) => {
+    if (err) throw err;
+    // 회원 가입 후 메인 페이지로 리다이렉션
+    res.redirect('/');
+  });
+});
+
+
+
 // 서버 실행
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
