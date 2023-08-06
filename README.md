@@ -48,13 +48,14 @@ Table: posts
 EJS(Embedded JavaScript Template):<br>
 ejs템플릿 파일 작성: <br>
 index.html -> index.ejs<br>
-서버에서 보낸 변수를 html 태그처럼 자바스크립트 내용을 삽입할 수 있다.
+서버에서 보낸 변수를 html 태그처럼 자바스크립트 내용을 삽입할 수 있다.<br>
 <% 에서 변수를 선언하고 <%= 로 받아서 사용할 수 있다.<br>
+ex)
 
 ```
- <% posts.forEach((post) => { %><br>
-<%= post.title %><br>
-<%= post.content %><br>
+<% posts.forEach((post) => { %>
+<%= post.title %>
+<%= post.content %>
 
 ```
 
