@@ -85,6 +85,9 @@ checkLoggedIn : <br>
 서버에 로그인 상태 확인 요청 : <br>
 상태 코드(xhr.status)를 확인 후 페이지 표시
 
+---
+로그아웃<br>
+
 
 
 
