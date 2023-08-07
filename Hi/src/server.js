@@ -1,5 +1,7 @@
 const express = require('express');
+const session = require('express-session');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 const path = require('path');
 const app = express();
 const PORT = 3000;
@@ -14,6 +16,15 @@ app.use(express.urlencoded({ extended: false }));
 
 // 정적 파일을 제공하는 미들웨어 설정
 app.use(express.static(path.join(__dirname,'..', 'public')));
+
+//crypto 세션 데이터 비밀키
+const secretKey = crypto.randomBytes(32).toString('hex');
+// 세션 미들웨어 설정
+app.use(session({
+  secret: secretKey,
+  resave: false,
+  saveUninitialized: true,
+}));
 
 // '/' 경로에 index.ejs 파일을 띄우기 위한 라우트 설정
 app.get('/', (req, res) => {
@@ -67,6 +78,7 @@ app.get('/login', (req, res) => {
 
 // 로그인 정보를 처리하는 핸들러
 app.post('/login', async (req, res) => {
+
   const { username, password } = req.body;
   try {
     // 사용자의 회원 가입 정보를 데이터베이스에서 조회
@@ -79,7 +91,9 @@ app.post('/login', async (req, res) => {
         // 데이터베이스에 저장된 해시화된 비밀번호와 입력받은 비밀번호 비교
         const isPasswordValid = await bcrypt.compare(password, results[0].password);
         if (isPasswordValid) {
-          // 로그인 성공
+           // 로그인이 성공한 경우, 사용자 ID를 세션에 저장
+      req.session.userId = results[0].id;
+          // 메인페이지로 이동
           res.redirect('/');
         } else {
           // 비밀번호가 일치하지 않는 경우
@@ -92,6 +106,24 @@ app.post('/login', async (req, res) => {
     console.error('Error during login:', err);
     res.status(500).send('Error during login.');
   }
+});
+
+
+// 예시: 로그인 상태 확인 미들웨어
+const checkLoggedIn = (req, res, next) => {
+  if (req.session.userId) {
+    // 로그인 상태인 경우, 다음 미들웨어 또는 요청 핸들러로 이동
+    next();
+  } else {
+    // 로그인 상태가 아닌 경우, 로그인 페이지로 리다이렉션
+    res.redirect('/login');
+  }
+};
+
+
+// 예시: 로그인 상태 확인 미들웨어를 사용하여 보호된 페이지
+app.get('/protected', checkLoggedIn, (req, res) => {
+  res.send('로그인이 됐을 때 보내는 메세지');
 });
 
 
