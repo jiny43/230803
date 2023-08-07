@@ -73,8 +73,22 @@ bcrypt 모듈 사용 : <br>
 
 ---
 
-express-session 미들웨어 사용: <br>
-세션으로 로그인 인증 유지 <br>
+express-session 미들웨어로 세션 설정: <br>
+사용자 정보 저장 , 로그인 상태 유지 <br>
+
+---
+서버측 <br>
+checkLoggedIn : <br>
+로그인 상태를 확인하고 세션에 userId 속성이 있는지 확인 <br>
+
+클라이언트측 <br>
+서버에 로그인 상태 확인 요청 : <br>
+상태 코드(xhr.status)를 확인 후 페이지 표시
+
+
+
+
+
 
 
 
