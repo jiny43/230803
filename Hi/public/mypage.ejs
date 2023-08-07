@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Page</title>
+    <!-- CSS 스타일 등을 포함한 헤더 부분 -->
+</head>
+<body>
+    <h1>Welcome to My Page</h1>
+    <div>
+        <p><strong>Username:</strong> <%= user.username %></p>
+        <p><strong>Email:</strong> <%= user.email %></p>
+        <!-- 기타 사용자 정보 필드들을 추가 -->
+    </div>
+    <div>
+        <h2>Edit My Information</h2>
+        <form id="editForm" action="/update" method="POST">
+            <input type="text" name="username" value="<%= user.username %>" required>
+            <input type="email" name="email" value="<%= user.email %>" required>
+            <!-- 기타 수정할 필드들을 추가 -->
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+
+    <!-- 클라이언트 스크립트 등을 포함한 바디 부분 -->
+</body>
+</html>

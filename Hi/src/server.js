@@ -134,6 +134,22 @@ app.post('/logout', (req, res) => {
   });
 });
 
+// 마이페이지 라우트 핸들러
+app.get('/mypage', (req, res) => {
+  // 로그인된 사용자의 아이디를 세션에서 가져옴 (로그인 상태가 아닌 경우 undefined일 수 있음)
+  const userId = req.session.userId;
+
+  // 사용자 아이디를 이용하여 데이터베이스에서 사용자 정보 조회
+  db.query('SELECT * FROM users WHERE id = ?', [userId], (err, results) => {
+    if (err) {
+      console.error('Error while fetching user information:', err);
+      return res.status(500).send('Error while fetching user information.');
+    }
+
+    // 사용자 정보를 템플릿에 전달하여 마이페이지 템플릿 렌더링
+    res.render('mypage', { user: results[0] });
+  });
+});
 
 
 
