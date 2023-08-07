@@ -64,7 +64,7 @@
     </header>
     <a href="/signup.html">회원 가입</a>
     <a href="/login.html">로그인</a>
-    <a href="/protected.html">테스트</a>
+    <a href="/mypage.html">마이페이지</a>
     <!-- 로그아웃 버튼 -->
     <a href="#" onclick="logout()">로그아웃</a>
 
@@ -94,10 +94,10 @@
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             // 로그인 상태인 경우, 테스트 페이지 표시
-            document.querySelector('a[href="/protected.html"]').style.display = 'block';
+            document.querySelector('a[href="/mypage.html"]').style.display = 'block';
         } else {
             // 로그인 상태가 아닌 경우, 테스트 페이지 링크 숨기기
-            document.querySelector('a[href="/protected.html"]').style.display = 'none';
+            document.querySelector('a[href="/mypage.html"]').style.display = 'none';
         }
     };
     xhr.send();
