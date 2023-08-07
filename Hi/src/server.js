@@ -60,6 +60,43 @@ app.post('/signup', async (req, res) => {
   }
 });
 
+// 로그인 페이지를 보여주기 위한 라우트
+app.get('/login', (req, res) => {
+  res.render('login'); // login.ejs 파일을 렌더링하여 로그인 페이지 보여줌
+});
+
+// 로그인 정보를 처리하는 핸들러
+app.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    // 사용자의 회원 가입 정보를 데이터베이스에서 조회
+    db.query('SELECT * FROM users WHERE username = ?', [username], async (err, results) => {
+      if (err) throw err;
+      if (results.length === 0) {
+        // 회원 정보가 없는 경우
+        res.status(401).send('회원정보가 없습니다.');
+      } else {
+        // 데이터베이스에 저장된 해시화된 비밀번호와 입력받은 비밀번호 비교
+        const isPasswordValid = await bcrypt.compare(password, results[0].password);
+        if (isPasswordValid) {
+          // 로그인 성공
+          res.redirect('/');
+        } else {
+          // 비밀번호가 일치하지 않는 경우
+          res.status(401).send('비밀번호가 일치하지 않습니다.');
+        }
+      }
+    });
+  } catch (err) {
+    // 에러 처리
+    console.error('Error during login:', err);
+    res.status(500).send('Error during login.');
+  }
+});
+
+
+
+
 
 
 // 서버 실행
