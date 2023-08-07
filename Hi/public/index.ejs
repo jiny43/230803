@@ -84,5 +84,20 @@
         </form>
     </div>
     
+<script>
+    //서버에 로그인 상태 확인 요청 보내기
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', '/checkLoggedIn', true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // 로그인 상태인 경우, 테스트 페이지 표시
+            document.querySelector('a[href="/protected.html"]').style.display = 'block';
+        } else {
+            // 로그인 상태가 아닌 경우, 테스트 페이지 링크 숨기기
+            document.querySelector('a[href="/protected.html"]').style.display = 'none';
+        }
+    };
+    xhr.send();
+</script>
 </body>
 </html>
