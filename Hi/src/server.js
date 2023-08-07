@@ -110,28 +110,31 @@ app.post('/login', async (req, res) => {
 
 
 app.get('/checkLoggedIn', (req, res) => {
-  if (req.session.userId) {
-      // 로그인 상태인 경우 응답으로 성공 상태 코드(200)를 보냄
-      res.sendStatus(200);
-  } else {
-      // 로그인 상태가 아닌 경우 응답으로 실패 상태 코드(401)를 보냄
-      res.sendStatus(401);
-  }
+    if (req.session.userId) {
+        // 로그인 상태인 경우 응답으로 성공 상태 코드(200)를 보냄
+        res.sendStatus(200);
+    } else {
+        // 로그인 상태가 아닌 경우 응답으로 실패 상태 코드(401)를 보냄
+        res.sendStatus(401);
+    }
 });
 
+// 로그아웃 처리 라우트와 핸들러
 app.post('/logout', (req, res) => {
   // 세션을 삭제하여 로그아웃 처리
   req.session.destroy((err) => {
-    if (err) {
-      // 에러가 발생한 경우 에러 처리
-      console.error('로그아웃 오류:', err);
-      res.status(500).send('로그아웃 중 오류가 발생했습니다.');
-    } else {
-      // 세션 삭제가 성공한 경우, 로그인 페이지로 리다이렉션 또는 다른 동작을 수행
-      res.redirect('/login'); // 로그인 페이지로 리다이렉션 예시
-    }
+      if (err) {
+          // 에러가 발생한 경우 에러 처리
+          console.error('로그아웃 오류:', err);
+          res.status(500).send('로그아웃 중 오류가 발생했습니다.');
+      } else {
+          // 세션 삭제가 성공한 경우
+          res.redirect('/'); 
+      }
   });
 });
+
+
 
 
 // 서버 실행
