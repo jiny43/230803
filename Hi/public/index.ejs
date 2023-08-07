@@ -65,6 +65,9 @@
     <a href="/signup.html">회원 가입</a>
     <a href="/login.html">로그인</a>
     <a href="/protected.html">테스트</a>
+    <!-- 로그아웃 버튼 -->
+    <a href="#" onclick="logout()">로그아웃</a>
+
     <div class="container">
         <% posts.forEach((post) => { %>
         <div class="post">
@@ -98,6 +101,26 @@
         }
     };
     xhr.send();
+
+//로그아웃 로직
+    function logout() {
+        fetch('/logout', {
+        method: 'POST', 
+        })
+        .then((response) => {
+            if (response.ok) {
+              // 로그아웃 요청이 성공적으로 처리된 경우
+            window.location.href = '/login'; 
+            } else {
+              // 로그아웃 요청이 실패한 경우
+            console.error('로그아웃 실패');
+            }
+        })
+        .catch((error) => {
+            // 네트워크 오류 등으로 요청이 실패한 경우
+            console.error('로그아웃 오류:', error);
+        });
+    }
 </script>
 </body>
 </html>
