@@ -109,26 +109,15 @@ app.post('/login', async (req, res) => {
 });
 
 
-// 예시: 로그인 상태 확인 미들웨어
-const checkLoggedIn = (req, res, next) => {
+app.get('/checkLoggedIn', (req, res) => {
   if (req.session.userId) {
-    // 로그인 상태인 경우, 다음 미들웨어 또는 요청 핸들러로 이동
-    next();
+      // 로그인 상태인 경우 응답으로 성공 상태 코드(200)를 보냄
+      res.sendStatus(200);
   } else {
-    // 로그인 상태가 아닌 경우, 로그인 페이지로 리다이렉션
-    res.redirect('/login');
+      // 로그인 상태가 아닌 경우 응답으로 실패 상태 코드(401)를 보냄
+      res.sendStatus(401);
   }
-};
-
-
-// 예시: 로그인 상태 확인 미들웨어를 사용하여 보호된 페이지
-app.get('/protected', checkLoggedIn, (req, res) => {
-  res.send('로그인이 됐을 때 보내는 메세지');
 });
-
-
-
-
 
 
 // 서버 실행
