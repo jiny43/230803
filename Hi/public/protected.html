@@ -1,27 +1,11 @@
-<!-- protected.html -->
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Protected Page</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 </head>
 <body>
-    <h1>Welcome to the Protected Page!</h1>
-    <script>
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', '/protected', true); // 서버의 /protected 경로에 GET 요청 보내기
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // 요청이 성공적으로 완료된 경우, protected 페이지를 표시
-                document.body.innerHTML += '<p>' + xhr.responseText + '</p>';
-            } else if (xhr.readyState === 4 && xhr.status === 401) {
-                // 로그인 상태가 아닌 경우, 로그인 페이지로 이동
-                window.location.href = '/login';
-            }
-        };
-        xhr.send();
-    </script>
+  로그인하면 보여질 페이지 
 </body>
 </html>
