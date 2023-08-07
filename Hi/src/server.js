@@ -1,4 +1,5 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
 const path = require('path');
 const app = express();
 const PORT = 3000;
@@ -41,14 +42,22 @@ app.get('/signup', (req, res) => {
 });
 
 // 회원 가입 정보를 처리하는 핸들러
-app.post('/signup', (req, res) => {
+app.post('/signup', async (req, res) => {
   const { username, password, email } = req.body;
-  // 회원 가입 정보를 데이터베이스에 삽입
-  db.query('INSERT INTO users (username, password, email) VALUES (?, ?, ?)', [username, password, email], (err) => {
-    if (err) throw err;
-    // 회원 가입 후 메인 페이지로 리다이렉션
-    res.redirect('/');
-  });
+  try {
+    // 비밀번호를 해시화하여 저장
+    const hashedPassword = await bcrypt.hash(password, 10); // 10은 saltRounds, 해시 비용 설정
+    // 회원 가입 정보를 데이터베이스에 삽입
+    db.query('INSERT INTO users (username, password, email) VALUES (?, ?, ?)', [username, hashedPassword, email], (err) => {
+      if (err) throw err;
+      // 회원 가입 후 메인 페이지로 리다이렉션
+      res.redirect('/');
+    });
+  } catch (err) {
+    // 에러 처리
+    console.error('Error during signup:', err);
+    res.status(500).send('Error during signup.');
+  }
 });
 
 
