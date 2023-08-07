@@ -87,6 +87,10 @@ checkLoggedIn : <br>
 
 ---
 로그아웃<br>
+로그아웃 버튼 추가 <br>
+logout(): 로그아웃 버튼 클릭 시 서버로 /logout 경로로 POST 요청을 보냄<br>
+'/' 메인페이지로 이동<br>
+/logout 경로로 POST 요청이 오면 세션을 삭제하여 로그아웃 처리
 
 
 
