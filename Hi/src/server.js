@@ -119,6 +119,20 @@ app.get('/checkLoggedIn', (req, res) => {
   }
 });
 
+app.post('/logout', (req, res) => {
+  // 세션을 삭제하여 로그아웃 처리
+  req.session.destroy((err) => {
+    if (err) {
+      // 에러가 발생한 경우 에러 처리
+      console.error('로그아웃 오류:', err);
+      res.status(500).send('로그아웃 중 오류가 발생했습니다.');
+    } else {
+      // 세션 삭제가 성공한 경우, 로그인 페이지로 리다이렉션 또는 다른 동작을 수행
+      res.redirect('/login'); // 로그인 페이지로 리다이렉션 예시
+    }
+  });
+});
+
 
 // 서버 실행
 app.listen(PORT, () => {
