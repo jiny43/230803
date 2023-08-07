@@ -147,9 +147,10 @@ app.get('/mypage', (req, res) => {
     }
 
     // 사용자 정보를 템플릿에 전달하여 마이페이지 템플릿 렌더링
-    res.render('mypage', { user: results[0] });
+    res.render('mypage', { user: results[0] }); 
   });
 });
+
 
 
 
