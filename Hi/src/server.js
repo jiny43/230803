@@ -151,6 +151,23 @@ app.get('/mypage', (req, res) => {
   });
 });
 
+// 사용자 정보 업데이트 라우트 핸들러
+app.post('/update', (req, res) => {
+  const userId = req.session.userId;
+  const { username, email } = req.body;
+
+  // 데이터베이스에서 사용자 정보 업데이트
+  db.query('UPDATE users SET username = ?, email = ? WHERE id = ?', [username, email, userId], (err) => {
+    if (err) {
+      console.error('Error while updating user information:', err);
+      return res.status(500).send('Error while updating user information.');
+    }
+
+    // 사용자 정보 업데이트 후, 마이페이지로 이동
+    res.redirect('/mypage');
+  });
+});
+
 
 
 
