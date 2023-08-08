@@ -26,24 +26,63 @@ app.use(session({
   saveUninitialized: true,
 }));
 
-// '/' 경로에 index.ejs 파일을 띄우기 위한 라우트 설정
 app.get('/', (req, res) => {
   db.query('SELECT * FROM posts', (err, results) => {
     if (err) throw err;
-    // 조회한 결과를 res.locals에 저장
-    res.locals.posts = results;
-    // index.ejs 파일을 렌더링하여 클라이언트에 전송
-    res.render('index');
+    
+    // 여기서 사용자 정보 조회 및 설정
+    const userId = req.session.userId;
+    if (userId) {
+      db.query('SELECT username FROM users WHERE id = ?', [userId], (userErr, userResults) => {
+        if (userErr) {
+          console.error('Error while fetching user information:', userErr);
+        } else {
+          const username = userResults[0].username;
+          res.locals.user = { username }; // user 정보를 res.locals에 설정
+        }
+        // 조회한 결과를 res.locals에 저장
+        res.locals.posts = results;
+        // index.ejs 파일을 렌더링하여 클라이언트에 전송
+        res.render('index');
+      });
+    } else {
+      res.locals.user = {}; // 빈 객체를 설정하여 user 변수가 정의되도록 함
+      res.locals.posts = results;
+      res.render('index');
+    }
   });
 });
 
-// 새로운 게시물 추가를 위한 라우트와 핸들러(post요청을 보낼 경로)
+// 게시글 작성 라우트 핸들러
 app.post('/submit', (req, res) => {
   const { title, content } = req.body;
-  // 새로운 게시물을 데이터베이스에 추가
-  db.query('INSERT INTO posts (title, content) VALUES (?, ?)', [title, content], (err) => {
-    if (err) throw err;
-    res.redirect('/');
+  const userId = req.session.userId;
+
+  if (!userId) {
+    return res.status(403).send('You are not logged in.');
+  }
+
+  // 사용자 아이디를 이용하여 데이터베이스에서 사용자 정보 조회
+  db.query('SELECT username FROM users WHERE id = ?', [userId], (err, results) => {
+    if (err) {
+      console.error('Error while fetching user information:', err);
+      return res.status(500).send('Error while fetching user information.');
+    }
+
+    const username = results[0].username;
+
+    // 게시글을 데이터베이스에 추가
+    db.query('INSERT INTO posts (title, content, user_id, username) VALUES (?, ?, ?, ?)', 
+      [title, content, userId, username], 
+      (err) => {
+        if (err) {
+          console.error('Error while adding a new post:', err);
+          return res.status(500).send('Error while adding a new post.');
+        }
+
+        res.redirect('/');
+      }
+    );
   });
 });
 
