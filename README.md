@@ -102,7 +102,7 @@ mypage.ejs에서 '/update' 경로로 post요청시 <br>
 게시글 작성자와 로그인 정보 연동 <br>
 temp_password : 게시글 등록과 삭제를 위해 임시 비밀번호 컬럼 추가<br>
 
-### 데이터 ERD 작성
+### 데이터모델링, ERD 작성
 
 
 
