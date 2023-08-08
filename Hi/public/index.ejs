@@ -71,6 +71,7 @@
     <div class="container">
         <% posts.forEach((post) => { %>
         <div class="post">
+            <div class="username"><%= user.username %></div>
             <div class="title"><%= post.title %></div>
             <div class="content">
                 <%= post.content %>
@@ -81,6 +82,7 @@
     <div class="form-container">
         <h2>Add a New Post</h2>
         <form id="postForm" action="/submit" method="POST">
+            <p><strong>Username:</strong> <%= user.username %></p>
             <input type="text" name="title" placeholder="Title" required>
             <textarea name="content" placeholder="Content" rows="4" required></textarea>
             <button type="submit">Submit</button>
@@ -101,7 +103,6 @@
         }
     };
     xhr.send();
-
 
     function logout() {
         fetch('/logout', {
