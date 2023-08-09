@@ -103,10 +103,10 @@ mypage.ejs에서 '/update' 경로로 post요청시 <br>
 temp_password : 게시글 등록과 삭제를 위해 임시 비밀번호 컬럼 추가<br>
 
 ### 8/9
-게시판 erp <br>
+게시판 ERD <br>
 <img src="./Hi/img/게시판erp.png" alt="게시판" style="width: 300px; height: auto;">
 <br>
-마켓 erp <br>
+마켓 ERD <br>
 
 
 
