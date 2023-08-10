@@ -128,7 +128,18 @@ CREATE TABLE comments (
   FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 ```
+게시글 작성자 표시<br>
+posts 테이블과 users 테이블을 조인하고, user_id가 같을 때 username 가져오기.
 
+```
+SELECT posts.*, users.username
+FROM posts
+INNER JOIN users ON posts.user_id = users.id;
+
+```
++----+--------------------------------------+------------------+---------------------+---------+-----------+
+| id | title                                | content          | created_at          | user_id | username  |
++----+--------------------------------------+------------------+---------------------+---------+-----------+
 
 
 
