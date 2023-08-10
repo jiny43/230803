@@ -27,9 +27,14 @@ app.use(session({
 }));
 
 app.get('/', (req, res) => {
-  db.query('SELECT * FROM posts', (err, results) => {
+    // 게시글 정보와 작성자 이름을 가져오는 SQL 쿼리
+    const query = `
+    SELECT posts.*, users.username
+    FROM posts
+    INNER JOIN users ON posts.user_id = users.id
+  `;
+  db.query(query, (err, results) => {
     if (err) throw err;
-    
     // 여기서 사용자 정보 조회 및 설정
     const userId = req.session.userId;
     if (userId) {
@@ -52,7 +57,6 @@ app.get('/', (req, res) => {
     }
   });
 });
-
 // 게시글 작성 라우트 핸들러
 app.post('/submit', (req, res) => {
   const { title, content } = req.body;
@@ -69,11 +73,11 @@ app.post('/submit', (req, res) => {
       return res.status(500).send('Error while fetching user information.');
     }
 
-    const username = results[0].username;
+    // const username = results[0].username;
 
     // 게시글을 데이터베이스에 추가
-    db.query('INSERT INTO posts (title, content, user_id, username) VALUES (?, ?, ?, ?)', 
-      [title, content, userId, username], 
+    db.query('INSERT INTO posts (title, content, user_id ) VALUES (?, ?, ?)', 
+      [title, content, userId], 
       (err) => {
         if (err) {
           console.error('Error while adding a new post:', err);

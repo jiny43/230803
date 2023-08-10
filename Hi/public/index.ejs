@@ -71,10 +71,11 @@
     <div class="container">
         <% posts.forEach((post) => { %>
         <div class="post">
-            <!-- 수정해야 할 부분, 로그인된 사용자의 이름이 아닌 작성자로 변경해야 함 -->
-            <div class="username"><%= user.username %></div>
             <div class="title"><%= post.title %></div>
             <div class="content">
+                <% if (post.username) { %>
+                    <div class="username">작성자: <%= post.username %></div>
+                <% } %>
                 <%= post.content %>
             </div>
         </div>
