@@ -229,14 +229,14 @@ app.post('/delete/:postId', (req, res) => {
     }
 
     if (results.length === 0 || results[0].user_id !== userId) {
-      return res.status(403).send('You do not have permission to delete this post.');
+      return res.status(403).send('삭제할 수 있는 권한이 없습니다.');
     }
 
     // 게시물 삭제 쿼리 실행
     db.query('DELETE FROM posts WHERE id = ?', [postId], (deleteErr) => {
       if (deleteErr) {
         console.error('Error while deleting post:', deleteErr);
-        return res.status(500).send('Error while deleting post.');
+        return res.status(500).send('삭제하지 못했습니다.');
       }
 
       res.sendStatus(204); // No Content 응답을 보냄 (성공적으로 삭제된 경우)
@@ -244,12 +244,13 @@ app.post('/delete/:postId', (req, res) => {
   });
 });
 
-app.get('/edit/:postId', (req, res) => {
+app.post('/update/:postId', (req, res) => {
   const postId = req.params.postId;
   const userId = req.session.userId;
+  const { title, content } = req.body;
 
-  // 게시물 정보를 가져와서 렌더링
-  db.query('SELECT * FROM posts WHERE id = ?', [postId], (err, results) => {
+  // 게시물 작성자인지 확인
+  db.query('SELECT user_id FROM posts WHERE id = ?', [postId], (err, results) => {
       if (err) {
           console.error('Error while fetching post information:', err);
           return res.status(500).send('Error while fetching post information.');
@@ -259,8 +260,15 @@ app.get('/edit/:postId', (req, res) => {
           return res.status(403).send('You do not have permission to edit this post.');
       }
 
-      const post = results[0];
-      res.render('edit', { post });
+      // 게시물 수정 쿼리 실행
+      db.query('UPDATE posts SET title = ?, content = ? WHERE id = ?', [title, content, postId], (updateErr) => {
+          if (updateErr) {
+              console.error('Error while updating post:', updateErr);
+              return res.status(500).send('수정하지 못했습니다.');
+          }
+
+          res.redirect('/'); // 수정 완료 후 메인 페이지로 이동
+      });
   });
 });
 
