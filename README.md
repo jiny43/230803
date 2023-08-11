@@ -142,9 +142,22 @@ INNER JOIN users ON posts.user_id = users.id;
 
 ### 8/12
 게시글 삭제와 수정 : <br>
-deletePost 삭제버튼을 클릭시 함수가 호출되어 삭제요청<br>
-게시물 권한을 확인하고 삭제 쿼리 실행 <br>
-성공하면 페이지 새로고침<br>
+deletePost 삭제버튼을 클릭 시 팝업 창으로 확인 여부 선택 <br>
+확인을 선택한 경우에만 서버로 삭제 요청 , 확인 여부를 전달 <br>
+```
+body: JSON.stringify({ confirmation: 'true' })
+```
+JSON 데이터를 파싱하기 위한 미들웨어 : 
+```
+app.use(express.json());
+```
+server : 
+```
+  if (req.body.confirmation === 'true') {
+      // 확인을 선택한 경우에만 게시물 삭제 쿼리 실행
+      db.query('DELETE FROM posts WHERE id = ?', [postId], (deleteErr) => {
+       
+```
 
 
 
