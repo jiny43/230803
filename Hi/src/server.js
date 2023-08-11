@@ -13,6 +13,8 @@ app.set('views', path.join(__dirname,'..', 'public'));
 
 // 전송받은 폼을 읽기위해 POST 요청 본문을 파싱하는 미들웨어
 app.use(express.urlencoded({ extended: false }));
+// JSON 데이터를 파싱하기 위한 미들웨어
+app.use(express.json());
 
 // 정적 파일을 제공하는 미들웨어 설정
 app.use(express.static(path.join(__dirname,'..', 'public')));
@@ -212,7 +214,6 @@ app.post('/update', (req, res) => {
 });
 
 
-// 삭제 라우트 핸들러
 app.post('/delete/:postId', (req, res) => {
   const postId = req.params.postId;
   const userId = req.session.userId;
@@ -232,17 +233,22 @@ app.post('/delete/:postId', (req, res) => {
       return res.status(403).send('삭제할 수 있는 권한이 없습니다.');
     }
 
-    // 게시물 삭제 쿼리 실행
-    db.query('DELETE FROM posts WHERE id = ?', [postId], (deleteErr) => {
-      if (deleteErr) {
-        console.error('Error while deleting post:', deleteErr);
-        return res.status(500).send('삭제하지 못했습니다.');
-      }
+    if (req.body.confirmation === 'true') {
+      // 확인을 선택한 경우에만 게시물 삭제 쿼리 실행
+      db.query('DELETE FROM posts WHERE id = ?', [postId], (deleteErr) => {
+        if (deleteErr) {
+          console.error('Error while deleting post:', deleteErr);
+          return res.status(500).send('삭제하지 못했습니다.');
+        }
 
-      res.sendStatus(204); // No Content 응답을 보냄 (성공적으로 삭제된 경우)
-    });
+        res.redirect('/');
+      });
+    } else {
+      res.redirect('/');
+    }
   });
 });
+
 
 app.post('/update/:postId', (req, res) => {
   const postId = req.params.postId;
