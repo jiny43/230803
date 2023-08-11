@@ -137,8 +137,12 @@ FROM posts
 INNER JOIN users ON posts.user_id = users.id;
 
 ```
-| id | title                               | content          | created_at          | user_id | username  |
-|----|-------------------------------------|------------------|---------------------|---------|-----------|
+
+| id | title| content| created_at          | user_id | username  |
+
+### 8/12
+게시글 삭제와 수정
+
 
 
 
