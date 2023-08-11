@@ -79,7 +79,7 @@
                     <%= post.content %>
                 </div>
                 <div class="actions">
-                    <form action="/delete/<%= post.id %>" method="POST" onsubmit="return confirm('게시물을 삭제하시겠습니까?')">
+                    <form action="/delete/<%= post.id %>" method="POST">
                         <button type="submit" onclick="deletePost(<%= post.id %>)">삭제</button>
                     </form>
                     <div class="actions">
