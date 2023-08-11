@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Bulletin Board</title>
+    <title>On Your Side</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -56,18 +56,30 @@
         .form-container button:hover {
             background-color: #444;
         }
+        h1 {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>Simple Bulletin Board</h1>
+        <h1>On Your Side</h1>
     </header>
     <a href="/signup.html">회원 가입</a>
     <a href="/login.html">로그인</a>
     <a href="/mypage">마이페이지</a>
     <!-- 로그아웃 버튼 -->
     <a href="#" onclick="logout()">로그아웃</a>
-  
+  <h1>문의 게시판</h1>
+  <div class="form-container">
+    <h2>문의글 작성하기</h2>
+    <form id="postForm" action="/submit" method="POST">
+        <p><strong>작성자:</strong> <%= user.username %></p>
+        <input type="text" name="title" placeholder="Title" required>
+        <textarea name="content" placeholder="Content" rows="4" required></textarea>
+        <button type="submit">작성완료</button>
+    </form>
+</div>
     <div class="container">
         <% posts.forEach((post) => { %>
             <div class="post">
@@ -90,23 +102,14 @@
         <% }); %>
     </div>
     <div class="edit-form-container" style="display: none;">
-        <h2>Edit Post</h2>
+        <h2>게시글 수정</h2>
         <form id="editForm" action="" method="POST">
             <input type="text" name="title" placeholder="Title" required>
             <textarea name="content" placeholder="Content" rows="4" required></textarea>
-            <button type="submit">Update</button>
+            <button type="submit">작성완료</button>
         </form>
     </div>
     
-    <div class="form-container">
-        <h2>Add a New Post</h2>
-        <form id="postForm" action="/submit" method="POST">
-            <p><strong>Username:</strong> <%= user.username %></p>
-            <input type="text" name="title" placeholder="Title" required>
-            <textarea name="content" placeholder="Content" rows="4" required></textarea>
-            <button type="submit">Submit</button>
-        </form>
-    </div>
     
 <script>
     //서버에 로그인 상태 확인 요청 보내기
