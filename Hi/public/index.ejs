@@ -70,21 +70,18 @@
   
     <div class="container">
         <% posts.forEach((post) => { %>
-        <div class="post">
-            <div class="username">작성자: <%= post.username %></div>
-            <div class="title"><%= post.title %></div>
-            <div class="content">
-                <%= post.content %>
-            </div>
-            <% if (user.username === post.username) { %>
-                <div class="button-group">
-                    <form action="/delete/<%= post.id %>" method="POST">
-                        <button type="submit" class="delete-button">삭제</button>
-                    </form>
-                    <a href="/edit/<%= post.id %>" class="edit-button">수정</a> <!-- 수정 버튼 추가 -->
+            <div class="post">
+                <div class="title"><%= post.title %></div>
+                <div class="content">
+                    <%= post.content %>
                 </div>
-            <% } %>
-        </div>
+                <div class="actions">
+                    <form action="/delete/<%= post.id %>" method="POST" onsubmit="return confirm('게시물을 삭제하시겠습니까?')">
+                        <button type="submit">삭제</button>
+                    </form>
+                    <a href="/edit/<%= post.id %>">수정</a>
+                </div>
+            </div>
         <% }); %>
     </div>
     
