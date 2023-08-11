@@ -212,7 +212,8 @@ app.post('/update', (req, res) => {
 });
 
 
-app.delete('/delete/:postId', (req, res) => {
+// 삭제 라우트 핸들러
+app.post('/delete/:postId', (req, res) => {
   const postId = req.params.postId;
   const userId = req.session.userId;
 
@@ -242,67 +243,6 @@ app.delete('/delete/:postId', (req, res) => {
     });
   });
 });
-// 게시물 수정 페이지 라우트 핸들러
-app.get('/edit/:postId', (req, res) => {
-  const postId = req.params.postId;
-  const userId = req.session.userId;
-
-  if (!userId) {
-    return res.redirect('/login'); // 로그인되지 않은 경우 로그인 페이지로 이동
-  }
-
-  // 게시물 작성자인지 확인
-  db.query('SELECT user_id, title, content FROM posts WHERE id = ?', [postId], (err, results) => {
-    if (err) {
-      console.error('Error while fetching post information:', err);
-      return res.status(500).send('Error while fetching post information.');
-    }
-
-    if (results.length === 0 || results[0].user_id !== userId) {
-      return res.status(403).send('You do not have permission to edit this post.');
-    }
-
-    const post = results[0];
-    res.render('edit', { post }); // 게시물 수정 페이지 렌더링
-  });
-});
-
-// 게시물 수정 라우트 핸들러
-app.post('/edit/:postId', (req, res) => {
-  const postId = req.params.postId;
-  const { title, content } = req.body;
-  const userId = req.session.userId;
-
-  if (!userId) {
-    return res.status(403).send('You are not logged in.');
-  }
-
-  // 게시물 작성자인지 확인
-  db.query('SELECT user_id FROM posts WHERE id = ?', [postId], (err, results) => {
-    if (err) {
-      console.error('Error while fetching post information:', err);
-      return res.status(500).send('Error while fetching post information.');
-    }
-
-    if (results.length === 0 || results[0].user_id !== userId) {
-      return res.status(403).send('You do not have permission to edit this post.');
-    }
-
-    // 게시물 수정 쿼리 실행
-    db.query('UPDATE posts SET title = ?, content = ? WHERE id = ?', [title, content, postId], (updateErr) => {
-      if (updateErr) {
-        console.error('Error while updating post:', updateErr);
-        return res.status(500).send('Error while updating post.');
-      }
-
-      res.redirect('/');
-    });
-  });
-});
-
-
-
-
 
 
 
