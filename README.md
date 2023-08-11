@@ -141,7 +141,10 @@ INNER JOIN users ON posts.user_id = users.id;
 | id | title| content| created_at          | user_id | username  |
 
 ### 8/12
-게시글 삭제와 수정
+게시글 삭제와 수정 : <br>
+deletePost 삭제버튼을 클릭시 함수가 호출되어 삭제요청<br>
+게시물 권한을 확인하고 삭제 쿼리 실행 <br>
+성공하면 페이지 새로고침<br>
 
 
 
