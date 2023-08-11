@@ -244,6 +244,25 @@ app.post('/delete/:postId', (req, res) => {
   });
 });
 
+app.get('/edit/:postId', (req, res) => {
+  const postId = req.params.postId;
+  const userId = req.session.userId;
+
+  // 게시물 정보를 가져와서 렌더링
+  db.query('SELECT * FROM posts WHERE id = ?', [postId], (err, results) => {
+      if (err) {
+          console.error('Error while fetching post information:', err);
+          return res.status(500).send('Error while fetching post information.');
+      }
+
+      if (results.length === 0 || results[0].user_id !== userId) {
+          return res.status(403).send('You do not have permission to edit this post.');
+      }
+
+      const post = results[0];
+      res.render('edit', { post });
+  });
+});
 
 
 // 서버 실행
