@@ -1,3 +1,4 @@
+/* 기본 스타일 */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -28,7 +29,7 @@ header {
   margin-top: 5px;
 }
 .form-container {
-  max-width: 600px;
+  max-width: 800px;
   margin: 20px auto;
   padding: 10px;
   border: 1px solid #ddd;
@@ -48,4 +49,101 @@ header {
 }
 .form-container button:hover {
   background-color: #444;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* 회원가입 */
+.signup_container {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+}
+.signup_container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.signup_container input[type="text"],
+.signup_container input[type="password"],
+.signup_container input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.signup_container button {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+.signup_container button:hover {
+    background-color: #444;
+}
+
+/* 로그인 */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+.login_container {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+}
+.login_container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.login_container input[type="text"],
+.login_container input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.login_container button {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+.login_container button:hover {
+  background-color: #444;
+}
+
+
+
+
+
+/* 모바일 버전 */
+@media (max-width: 767px) {
+  .container {
+      padding: 10px;
+  }
+  .form-container {
+      max-width: 90%;
+  }
+}
+
+/* 태블릿 버전 */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .container {
+      max-width: 90%;
+  }
+}
+
+/* 데스크탑 버전 */
+@media (min-width: 1025px) {
+  .container {
+      max-width: 800px;
+  }
 }
