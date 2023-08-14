@@ -1,6 +1,8 @@
-# DB_prac
 
-DBMS: MySQL
+
+DBMS: MySQL <br>
+
+[진행상황😳](http://ec2-15-165-235-146.ap-northeast-2.compute.amazonaws.com:3000/)
 
 ---
 
@@ -105,7 +107,7 @@ temp_password : 게시글 등록과 삭제를 위해 임시 비밀번호 컬럼 
 ### 8/9
 
 ERD 작성<br>
-<img src="./Hi/img/게시판.png" alt="게시판">
+<img src="./img/게시판.png" alt="게시판">
 
 ### 8/10
 FK 제약조건 설정하기 <br>
@@ -158,7 +160,12 @@ server :
       db.query('DELETE FROM posts WHERE id = ?', [postId], (deleteErr) => {
        
 ```
-
+### 8/14
+AWS EC2 서비스로 웹 배포해보기
+나의 작은 문의 게시판 :  
+```
+http://ec2-15-165-235-146.ap-northeast-2.compute.amazonaws.com:3000/
+```
 
 
 
