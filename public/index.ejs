@@ -43,17 +43,18 @@
                         <button onclick="showEditForm(<%= post.id %>, '<%= post.title %>', '<%= post.content %>')">수정</button>
                     </div>
                 </div>
+                <div class="edit-form-container" style="display: none;">
+                    <h2>게시글 수정</h2>
+                    <form id="editForm" action="" method="POST">
+                        <input type="text" name="title" placeholder="Title" required>
+                        <textarea name="content" placeholder="Content" rows="4" required></textarea>
+                        <button type="submit">작성완료</button>
+                    </form>
+                </div>
             </div>
         <% }); %>
     </div>
-    <div class="edit-form-container" style="display: none;">
-        <h2>게시글 수정</h2>
-        <form id="editForm" action="" method="POST">
-            <input type="text" name="title" placeholder="Title" required>
-            <textarea name="content" placeholder="Content" rows="4" required></textarea>
-            <button type="submit">작성완료</button>
-        </form>
-    </div>
+
     
     
 <script>
